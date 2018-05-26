@@ -1,8 +1,4 @@
 ---
-- name: Install base packages for KVM
-  hosts: all
-  remote_user: root
-  vars:
     yum_packages:
       - 'qemu-kvm'
       - 'qemu-img'
@@ -46,12 +42,29 @@
      args:
        executable: /bin/bash
 
-  - name: make template file for network
+  - name: make template file for br0 device
     template:
-      src: ifcfg-br0
+      src: ifcfg-br0.j2
       dest: /etc/sysconfig/network-scripts/ifcfg-br0
       group: root
       owner: root
       chmod: 0600
 
+  - name: make template file for default-interface device
+    template:
+      src: ifcfg-eth0.j2
+      dest: "/etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}"
+      group: root
+      owner: root
+      chmod: 0600
+    notify:
+    - restart network
+
+  - name: make a vm with virsh install
+    shell: >
+      "virsh install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
+      --nonspare --graphics spice --vcpus={{ vm.vcpus }} --ram={{ vm.ram }} --cdrom={{ vm.iso }}
+      --network bridge=br0 --os-type={{ vm.os }} --os-variant=generic"
+    args:
+      executable: /bin/bash
 ...

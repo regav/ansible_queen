@@ -9,3 +9,37 @@ br0:
   gateway: 192.168.150.1
   nm: no
 
+eth0:
+  type: ETHERNET
+  proto: STATIC
+  device: "{{ ansible_default_ip4.interface }}"
+  onboot: yes
+  bridge: br0
+
+yum_packages:
+  - 'qemu-kvm'
+  - 'qemu-img'
+  - 'virt-manager'
+  - 'libvirt'
+  - 'libvirt-python'
+  - 'libvirt-client'
+  - 'virt-install'
+  - 'virt-viewer'
+  - 'bridge-utils'
+  - '"@X Window System"'
+  - 'xorg-x11-xauth'
+  - '"xorg-x11-fonts-*"'
+  - 'xorg-x11-utils'
+
+vm_workspace: /data/vms/
+vm_isos: /data/vms/isos/
+
+vm:
+  name: ubuntu
+  diskpath: "{{ vm_workspace }}"/ubuntu.dsk
+  size: 20
+  vcpus: 1
+  ram: 2
+  iso: /data/vms/isos/ubuntu
+  os: linux
+
