@@ -60,6 +60,19 @@
     notify:
     - restart network
 
+  - name: make the vm workspace dir
+    file:
+      owner: root
+      group: root
+      recurse: yes
+      path: "{{ vm_workspace }}"
+
+  - name: make the vm iso dir
+    file:
+      owner: root
+      group: root
+      path: "{{ vm_isos }}"
+    
   - name: make a vm with virsh install
     shell: >
       "virsh install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
