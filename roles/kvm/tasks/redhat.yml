@@ -1,0 +1,68 @@
+---
+  - name: Install packages
+    yum:
+      name: "{{ yum_packages }}"
+      state: latest
+
+  - name: start/enable libvirtd service
+    systemd:
+      enabled: yes
+      name: libvirtd
+      state: started
+
+  - name: test if KVM module is loaded
+    shell: |
+     RESULT=$?
+     lsmod | grep kvm 1> /dev/null
+     if [ $RESULT -eq 1 ] 
+     then
+       lscpu | awk '/Vendor/' | grep -i intel
+       if [ $RESULT -eq 0] 
+       then
+         modprobe kvm-intel
+       else
+         modprobe kvm-amd
+       fi
+     fi
+    args:
+      executable: /bin/bash
+
+  - name: make template file for br0 device
+    template:
+      src: ifcfg-br0.j2
+      dest: /etc/sysconfig/network-scripts/ifcfg-br0
+      group: root
+      owner: root
+      chmod: 0600
+
+  - name: make template file for default-interface device
+    template:
+      src: ifcfg-eth0.j2
+      dest: "/etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}"
+      group: root
+      owner: root
+      chmod: 0600
+    notify:
+    - restart network
+
+  - name: make the vm workspace dir
+    file:
+      owner: root
+      group: root
+      recurse: yes
+      path: "{{ vm_workspace }}"
+  
+  - name: make the vm iso dir
+    file:
+      owner: root
+      group: root
+      path: "{{ vm_isos }}"
+    
+  - name: make a vm with virsh install
+    shell: >
+      "virsh install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
+      --nonspare --graphics spice --vcpus={{ vm.vcpus }} --ram={{ vm.ram }} --cdrom={{ vm.iso }}
+      --network bridge=br0 --os-type={{ vm.os }} --os-variant=generic"
+    args:
+      executable: /bin/bash
+...

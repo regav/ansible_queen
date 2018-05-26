@@ -36,7 +36,7 @@ vm_isos: /data/vms/isos/
 
 vm:
   name: ubuntu
-  diskpath: "{{ vm_workspace }}"/ubuntu.dsk
+  diskpath: "{{ vm_workspace }}/ubuntu.dsk"
   size: 20
   vcpus: 1
   ram: 2

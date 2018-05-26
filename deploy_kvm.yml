@@ -1,5 +1,5 @@
 ---
-- name: playbook role to push kvm with a ubuntu host
+- name: playbook role to push kvm with a ubuntu guest
   hosts: localhost
   become: yes
   roles:
