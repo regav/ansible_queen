@@ -1,0 +1,46 @@
+---
+- name: Install base packages for KVM
+  hosts: all
+  remote_user: root
+  vars:
+    yum_packages:
+      - 'qemu-kvm'
+      - 'qemu-img'
+      - 'virt-manager'
+      - 'libvirt'
+      - 'libvirt-python'
+      - 'libvirt-client'
+      - 'virt-install'
+      - 'virt-viewer'
+      - 'bridge-utils'
+      - '"@X Window System"'
+      - 'xorg-x11-xauth'
+      - '"xorg-x11-fonts-*"'
+      - 'xorg-x11-utils'
+  tasks:
+    - name: Install packages
+      yum:
+        name: "{{ yum_packages }}"
+        state: latest
+
+    - name: start/enable libvirtd service
+      systemd:
+        enabled: yes
+        name: libvirtd
+        state: started
+
+   - name: test if KVM module is loaded
+     shell: |
+       RESULT=$?
+       lsmod | grep kvm
+       if [ $RESULT -eq 1]; then
+         lscpu | awk '/Vendor/' | grep -i intel
+         if [ $RESULT -eq 0]; then
+           modprobe kvm-intel
+           exit 0
+         else;
+           modprobe kvm-amd
+           exit 0
+
+   - name: 
+...
