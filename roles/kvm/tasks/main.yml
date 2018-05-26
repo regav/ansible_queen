@@ -32,15 +32,26 @@
    - name: test if KVM module is loaded
      shell: |
        RESULT=$?
-       lsmod | grep kvm
-       if [ $RESULT -eq 1]; then
+       lsmod | grep kvm 1> /dev/null
+       if [ $RESULT -eq 1 ] 
+       then
          lscpu | awk '/Vendor/' | grep -i intel
-         if [ $RESULT -eq 0]; then
+         if [ $RESULT -eq 0] 
+         then
            modprobe kvm-intel
-           exit 0
-         else;
+         else
            modprobe kvm-amd
-           exit 0
+         fi
+       fi
+     args:
+       executable: /bin/bash
 
-   - name: 
+  - name: make template file for network
+    template:
+      src: ifcfg-br0
+      dest: /etc/sysconfig/network-scripts/ifcfg-br0
+      group: root
+      owner: root
+      chmod: 0600
+
 ...

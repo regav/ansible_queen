@@ -1,0 +1,11 @@
+---
+br0:
+  type: ETHERNET
+  proto: STATIC
+  device: br0
+  onboot: yes
+  ipadr: 192.168.150.185
+  netmask: 255.255.255.0
+  gateway: 192.168.150.1
+  nm: no
+
