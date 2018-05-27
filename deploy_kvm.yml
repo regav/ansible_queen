@@ -1,7 +1,12 @@
 ---
 - name: playbook role to push kvm with a ubuntu guest
-  hosts: localhost
+  hosts: all
+  remote_user: root
   become: yes
+  connection: local
+  gather_facts: True
+  #vars:
+  #  - default_interface: "{{ ansible_default_ipv4.interface }}"
   roles:
     - kvm
 ...

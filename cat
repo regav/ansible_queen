@@ -1,0 +1,29 @@
+roles/kvm/:
+total 20
+drwxrwxr-x. 2 reg reg 4096 May 26 15:49 defaults
+drwxr-xr-x. 2 reg reg 4096 May 26 11:46 files
+drwxrwxr-x. 2 reg reg 4096 May 26 10:54 handlers
+drwxrwxr-x. 2 reg reg 4096 May 26 15:51 tasks
+drwxrwxr-x. 2 reg reg 4096 May 26 15:50 templates
+
+roles/kvm/defaults:
+total 4
+-rw-rw-r--. 1 reg reg 861 May 26 15:49 main.yml
+
+roles/kvm/files:
+total 0
+
+roles/kvm/handlers:
+total 4
+-rw-rw-r--. 1 reg reg 81 May 26 10:54 main.yml
+
+roles/kvm/tasks:
+total 12
+-rw-r--r--. 1 reg reg 1794 May 26 15:51 fedora.yml
+-rw-rw-r--. 1 reg reg  190 May 26 11:20 main.yml
+-rw-r--r--. 1 reg reg 1622 May 26 11:04 redhat.yml
+
+roles/kvm/templates:
+total 8
+-rw-rw-r--. 1 reg reg 211 May 25 21:53 ifcfg-br0.j2
+-rw-rw-r--. 1 reg reg 163 May 26 09:43 ifcfg-eth0.j2

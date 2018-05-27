@@ -4,7 +4,7 @@ br0:
   proto: STATIC
   device: br0
   onboot: yes
-  ipadr: 192.168.150.185
+  ipv4: 192.168.150.185
   netmask: 255.255.255.0
   gateway: 192.168.150.1
   nm: no
@@ -12,9 +12,10 @@ br0:
 eth0:
   type: ETHERNET
   proto: STATIC
-  device: "{{ ansible_default_ip4.interface }}"
+  device: "{{ ansible_default_ipv4.interface }}"
   onboot: yes
   bridge: br0
+  nm: no
 
 yum_packages:
   - 'qemu-kvm'
@@ -34,12 +35,18 @@ yum_packages:
 vm_workspace: /data/vms/
 vm_isos: /data/vms/isos/
 
+iso_wget:
+  link: http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
+  name: ubuntu_mini.iso
+  
+
 vm:
   name: ubuntu
-  diskpath: "{{ vm_workspace }}/ubuntu.dsk"
+  diskpath: "{{ vm_workspace }}ubuntu_raw.dsk"
+  disk_options: "format=raw,size=40"
   size: 20
   vcpus: 1
-  ram: 2
-  iso: /data/vms/isos/ubuntu
+  ram: 2048
+  iso: "{{ vm_isos }}{{ iso_wget.name }}"
   os: linux
 

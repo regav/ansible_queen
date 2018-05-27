@@ -1,7 +1,12 @@
 ---
   - name: Install packages
     dnf:
-      name: "{{ yum_packages }}"
+      name: '@virtualization'
+      state: latest
+
+  - name: ensure libselinux-python package is installed
+    dnf:
+      name: libselinux-python
       state: latest
 
   - name: start/enable libvirtd service
@@ -33,7 +38,7 @@
       dest: /etc/sysconfig/network-scripts/ifcfg-br0
       group: root
       owner: root
-      chmod: 0600
+      mode: 0600
 
   - name: make template file for default-interface device
     template:
@@ -41,7 +46,7 @@
       dest: "/etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}"
       group: root
       owner: root
-      chmod: 0600
+      mode: 0600
     notify:
     - restart network
 
@@ -56,12 +61,25 @@
     file:
       owner: root
       group: root
+      recurse: yes
       path: "{{ vm_isos }}"
     
+  - name: ensure wget is installed
+    dnf:
+      name: wget
+      state: latest
+
+  - name: copy ubuntu iso
+    get_url:
+      url: "{{ iso_wget.link }}"
+      dest: "{{ vm.iso }}"
+#  - name: copy ubuntu iso
+#    shell: wget "{{ iso_wget.link }} -O  {{ vm_isos }}{{ iso_wget.name }}"
+
   - name: make a vm with virsh install
     shell: >
-      "virsh install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
-      --nonspare --graphics spice --vcpus={{ vm.vcpus }} --ram={{ vm.ram }} --cdrom={{ vm.iso }}
+      "virt-install  --name={{ vm.name }} --disk path={{ vm.diskpath }},{{ vm.disk_options }}
+      --graphics spice --vcpus={{ vm.vcpus }} --ram={{ vm.ram }} --cdrom={{ vm.iso }}
       --network bridge=br0 --os-type={{ vm.os }} --os-variant=generic"
     args:
       executable: /bin/bash

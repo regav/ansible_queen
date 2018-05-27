@@ -1,8 +1,8 @@
 ---
 
 - include: fedora.yml
-  when: ansible_os_family == 'Fedora'
+  when: ansible_os_family == "RedHat" and ansible_pkg_mgr == "dnf"
   
 - include: redhat.yml
-  when: ansible_os_family == 'Centos'
+  when: ansible_os_family == "Redhat" and ansible_pkg_mgr == "yum"
 ...
