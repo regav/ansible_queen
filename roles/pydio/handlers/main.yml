@@ -1,0 +1,13 @@
+---
+ - name: enable mariadb
+   service:
+     name: mariab
+     state: enabled
+
+ - name: start mariadb
+   service:
+     name: mariadb
+     state: start
+
+ - name: disable selinux
+   shell: setenforce 0

@@ -1,0 +1,12 @@
+---
+php_packages:
+ - "php"
+ - "php-common"
+ - "php-fpm"
+ - "php-intl"
+ - "php-gd"
+ - "php-mbstring"
+ - "php-xml"
+ - "php-opcache"
+
+

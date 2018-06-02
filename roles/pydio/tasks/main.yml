@@ -1,0 +1,21 @@
+---
+ - name: install MariabDB
+   dnf:
+     name: mariadb
+     state: latest
+   notify:
+   - enable mariadb
+   - start mariadb
+
+ - name: change selinux to permissive
+   copy:
+     dest: /etc/selinux/config
+     src: selinux.cfg
+   notify:
+   - disable selinux
+ 
+ - name: install php packages
+   dnf:
+     name: "{{ php_packages }}"
+     state: latest
+
