@@ -1,13 +1,11 @@
 ---
- - name: enable mariadb
-   service:
-     name: mariab
-     state: enabled
-
- - name: start mariadb
-   service:
+ - name: enable/start mariadb
+   systemd:
      name: mariadb
-     state: start
+     state: started 
+     enabled: yes
 
  - name: disable selinux
    shell: setenforce 0
+   args:
+     executable: /bin/bash

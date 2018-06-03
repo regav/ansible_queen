@@ -1,10 +1,10 @@
 ---
 br0:
-  type: ETHERNET
+  type: BRIDGE
   proto: STATIC
   device: br0
   onboot: yes
-  ipv4: 192.168.150.185
+  ipv4: 192.168.150.111
   netmask: 255.255.255.0
   gateway: 192.168.150.1
   nm: no
@@ -36,13 +36,13 @@ vm_workspace: /data/vms/
 vm_isos: /data/vms/isos/
 
 iso_wget:
-  link: http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
-  name: ubuntu_mini.iso
+  url: http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
+  name: centos7_minimal.iso
   
 
 vm:
-  name: ubuntu
-  diskpath: "{{ vm_workspace }}ubuntu_raw.dsk"
+  name: centOS7
+  diskpath: "{{ vm_workspace }}windows10_raw.dsk"
   disk_options: "format=raw,size=40"
   size: 20
   vcpus: 1

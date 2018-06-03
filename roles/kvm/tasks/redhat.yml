@@ -57,10 +57,15 @@
       owner: root
       group: root
       path: "{{ vm_isos }}"
-    
+
+  - name: grab iso from mirror
+    get_url:
+      url: "{{ iso_wget.url }}"
+      dest: "{{ vm_isos }}{{ iso_wget.name }}"
+
   - name: make a vm with virsh install
     shell: >
-      "virsh install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
+      "virt-install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
       --nonspare --graphics spice --vcpus={{ vm.vcpus }} --ram={{ vm.ram }} --cdrom={{ vm.iso }}
       --network bridge=br0 --os-type={{ vm.os }} --os-variant=generic"
     args:

@@ -1,11 +1,16 @@
 ---
  - name: install MariabDB
    dnf:
-     name: mariadb
+     name: "{{ mariadb_packages }}"
      state: latest
    notify:
-   - enable mariadb
-   - start mariadb
+   - enable/start mariadb
+
+ - name: ensure mariadb service is enabled and started # in case of package already installed
+   systemd:
+     name: mariadb
+     state: started
+     enabled: yes
 
  - name: change selinux to permissive
    copy:
@@ -19,3 +24,21 @@
      name: "{{ php_packages }}"
      state: latest
 
+ - name: drop www.conf template file
+   template:
+     src: www.conf.j2
+     dest: /etc/php-fpm.d/www.conf
+     owner: root
+     group: root
+     mode: 0644
+
+ - name: make pydio user
+   user:
+     name: pydio
+     comment: pydio service account
+
+ - name: add authorized key to pydio user
+   authorized_key:
+     user: pydio
+     state: present
+     key: "{{ pydio_auth_key }}"

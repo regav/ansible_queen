@@ -1,0 +1,10 @@
+---
+- name: playbook role to push pydio to localhost
+  hosts: all
+  remote_user: root
+  become: yes
+  connection: local
+  gather_facts: True
+  roles:
+    - pydio
+...

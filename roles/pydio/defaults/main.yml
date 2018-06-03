@@ -9,4 +9,14 @@ php_packages:
  - "php-xml"
  - "php-opcache"
 
+mariadb_packages:
+ - "mariadb"
+ - "mariadb-server"
+
+php_fpm:
+  user: pydio
+  listen: "127.0.0.1:9000
+
+pydio_auth_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVaijkQrbTnIUhazO+cNyJbEASsZgormFVM6oFpP5AeElArRqzIdaIVmvo9wyStAL4cT55r5iL+u0jvUn4XEUWJCr1b2Mp5E9e+DTTrgC+jTsv2Qmiq4rpDG7DgebfZaNc3ATzCs1BbSDxztKvZvamCfL9FcdvQJUc5rMGlzqEXuhxyO9zCSBsnJt5ub8FYpT6EHUsGcfEvWaYubrWAHeTlQkjtcmetNTbBGtBDVR8bC2vBbFFrXLihyWzVntwhdlnAvAB/vg8Pe6961PVVa/fa+0ZMtYJjDBb3T4Ya/jhWnVNHeQSzmtuKGAcxStnupt+VNSeQfC4V8UHv0DGyyxd reg@queen"
+
 
