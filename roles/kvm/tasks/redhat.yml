@@ -33,7 +33,7 @@
       dest: /etc/sysconfig/network-scripts/ifcfg-br0
       group: root
       owner: root
-      chmod: 0600
+      mode: 0600
 
   - name: make template file for default-interface device
     template:
@@ -41,7 +41,7 @@
       dest: "/etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}"
       group: root
       owner: root
-      chmod: 0600
+      mode: 0600
     notify:
     - restart network
 
@@ -57,6 +57,7 @@
       owner: root
       group: root
       path: "{{ vm_isos }}"
+      recurse: yes
 
   - name: grab iso from mirror
     get_url:
@@ -65,9 +66,18 @@
 
   - name: make a vm with virsh install
     shell: >
-      "virt-install  --name={{ vm.name }} --file={{ vm.diskpath }} --file-size={{ vm.size}}
-      --nonspare --graphics spice --vcpus={{ vm.vcpus }} --ram={{ vm.ram }} --cdrom={{ vm.iso }}
-      --network bridge=br0 --os-type={{ vm.os }} --os-variant=generic"
+      "virt-install 
+      --name {{ vm.name }} 
+      --disk path={{ vm.diskpath }}
+      --graphics vnc
+      --vcpus={{ vm.vcpus }}
+      --ram={{ vm.ram }}
+      --cdrom={{ vm.iso }}
+      --network bridge=br0 
+      --os-type={{ vm.os }}
+      --os-variant=generic"
+
     args:
       executable: /bin/bash
+    become: yes
 ...

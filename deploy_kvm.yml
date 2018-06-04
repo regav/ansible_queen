@@ -3,7 +3,7 @@
   hosts: all
   remote_user: root
   become: yes
-  connection: local
+  #connection: local
   gather_facts: True
   #vars:
   #  - default_interface: "{{ ansible_default_ipv4.interface }}"

@@ -69,7 +69,7 @@
       name: wget
       state: latest
 
-  - name: copy ubuntu iso
+  - name: copy centos iso
     get_url:
       url: "{{ iso_wget.link }}"
       dest: "{{ vm.iso }}"

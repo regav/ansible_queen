@@ -1,2 +1,4 @@
 [self]
-localhost
+
+[centos-vm]
+192.168.150.111
