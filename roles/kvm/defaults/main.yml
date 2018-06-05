@@ -1,7 +1,7 @@
 ---
 br0:
-  type: BRIDGE
-  proto: STATIC
+  type: Bridge
+  proto: static
   device: br0
   onboot: yes
   ipv4: 192.168.150.111
@@ -10,8 +10,8 @@ br0:
   nm: no
 
 eth0:
-  type: ETHERNET
-  proto: STATIC
+  type: Ethernet
+  proto: none 
   device: "{{ ansible_default_ipv4.interface }}"
   onboot: yes
   bridge: br0
