@@ -15,8 +15,10 @@ mariadb_packages:
 
 php_fpm:
   user: pydio
-  listen: "127.0.0.1:9000
+  listen: "127.0.0.1:9000"
 
 pydio_auth_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVaijkQrbTnIUhazO+cNyJbEASsZgormFVM6oFpP5AeElArRqzIdaIVmvo9wyStAL4cT55r5iL+u0jvUn4XEUWJCr1b2Mp5E9e+DTTrgC+jTsv2Qmiq4rpDG7DgebfZaNc3ATzCs1BbSDxztKvZvamCfL9FcdvQJUc5rMGlzqEXuhxyO9zCSBsnJt5ub8FYpT6EHUsGcfEvWaYubrWAHeTlQkjtcmetNTbBGtBDVR8bC2vBbFFrXLihyWzVntwhdlnAvAB/vg8Pe6961PVVa/fa+0ZMtYJjDBb3T4Ya/jhWnVNHeQSzmtuKGAcxStnupt+VNSeQfC4V8UHv0DGyyxd reg@queen"
 
+pydio_url:  https://download.pydio.com/pub/cells/release/1.0.0/linux-amd64/cells
 
+pydio_dir: /opt/pydio

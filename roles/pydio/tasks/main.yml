@@ -25,8 +25,8 @@
      state: latest
 
  - name: drop www.conf template file
-   template:
-     src: www.conf.j2
+   copy:
+     src: www.conf
      dest: /etc/php-fpm.d/www.conf
      owner: root
      group: root
@@ -42,3 +42,20 @@
      user: pydio
      state: present
      key: "{{ pydio_auth_key }}"
+
+# - name: start php-fpm services
+
+ - name: make pydio folder
+   file:
+     path: "{{ pydio_dir }}"
+     owner: pydio
+     group: pydio
+     mode: 0775
+     state: directory
+
+ - name: download pydio cells
+   get_url:
+     url: "{{ pydio_url }}"
+     dest: /opt/pydio/
+     mode: 0744
+
